@@ -28,6 +28,8 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
 
+            \Log::info('Login usuario: ' . $user->username . ' rol: ' . $user->rol);
+
             if ($user->rol === 'admin') {
                 return redirect()->route('admin.dashboard');
             }
