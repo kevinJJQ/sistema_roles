@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -9,10 +10,15 @@ class SoloUsuario
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || Auth::user()->rol !== 'usuario') {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->rol !== 'usuario') {
             return redirect()->route('login')
                    ->with('error', 'Acceso solo para usuarios.');
         }
+
         return $next($request);
     }
 }
