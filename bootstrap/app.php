@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->validateCsrfTokens(except: [
+            'login',
+        ]);
         $middleware->alias([
             'solo.admin'   => \App\Http\Middleware\SoloAdmin::class,
             'solo.usuario' => \App\Http\Middleware\SoloUsuario::class,
